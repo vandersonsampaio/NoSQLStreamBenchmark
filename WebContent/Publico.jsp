@@ -42,20 +42,20 @@
 			<div class="form-group row">
 				<label for="edtConcorrencia" class="col-xs-2 col-form-label">Concorrência</label>
 				<div class="col-xs-8">
-					<input class="form-control" id="edtConcorrencia" name="edtConcorrencia" type="number"/>
+					<input class="form-control" id="edtConcorrencia" name="edtConcorrencia" value='${edtConcorrencia}' type="number"/>
 				</div>
 			</div>
 			
 			<div class="form-group row">
 				<label for="edtQuantidade" class="col-xs-2 col-form-label">Quantidade</label>
 				<div class="col-xs-8">
-					<input class="form-control" id="edtQuantidade" name="edtQuantidade" type="number"/>
+					<input class="form-control" id="edtQuantidade" name="edtQuantidade" value='${edtQuantidade}' type="number"/>
 				</div>
 			</div>
 			
 			<div class="form-group col-xs-12">
-				<button type="submit" title="Consultar" class="btn btn-primary" name="btnConsultar">Consultar</button>
-				<button type="submit" title="Realizar Medição" class="btn btn-info" name="btnMedir">Medir</button>
+				<button type="submit" title="Consultar" class="btn btn-primary" name="btnSubmit" value="btnConsultar">Consultar</button>
+				<button type="submit" title="Realizar Medição" class="btn btn-info" name="btnSubmit" value="btnMedir">Medir</button>
 			</div>
 			
 			<div class="form-group col-xs-12">
@@ -67,7 +67,7 @@
 			<div class="form-group row">
 				<label for="edtConsole" class="col-xs-2 col-form-label">Console</label>
 				<div class="col-xs-8">
-					<textarea class="form-control" id="edtConsole"></textarea>
+					<textarea class="form-control" id="edtConsole">${edtConsole}</textarea>
 				</div>
 			</div>
 		</form>

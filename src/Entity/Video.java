@@ -4,21 +4,35 @@ import Adapter.Adaptador;
 
 public class Video {
 
-	//Atributos
+	// Atributos
 	private String resolucao;
-	private Byte[] dados;	
+	private Byte[] dados;
 	private String fonteDados;
 	private Adaptador adaptador;
-	
-	//Construtor
-	public Video(){
+
+	// Construtor
+	public Video() {
 		this.resolucao = "";
 		this.dados = null;
 		this.fonteDados = "";
-		this.adaptador = new Adaptador();
+		this.adaptador = null;
 	}
-	
-	//Métodos de Acesso
+
+	public Video(String resolucao, String fonteDados) {
+		this.resolucao = resolucao;
+		this.dados = null;
+		this.fonteDados = fonteDados;
+		this.adaptador = new Adaptador(fonteDados);
+	}
+
+	public Video(String resolucao, String fonteDados, Byte[] dados) {
+		this.resolucao = resolucao;
+		this.dados = dados;
+		this.fonteDados = fonteDados;
+		this.adaptador = new Adaptador(fonteDados);
+	}
+
+	// Métodos de Acesso
 	public String getResolucao() {
 		return resolucao;
 	}
@@ -40,6 +54,7 @@ public class Video {
 	}
 
 	public void setFonteDados(String fonteDados) {
+		this.adaptador = new Adaptador(fonteDados);
 		this.fonteDados = fonteDados;
 	}
 
@@ -47,7 +62,17 @@ public class Video {
 		return adaptador;
 	}
 
-	public void setAdaptador(Adaptador adaptador) {
-		this.adaptador = adaptador;
+	public boolean inserir() {
+		return adaptador.inserirFilme(this.resolucao, this.dados);
+	}
+
+	public boolean buscar() {
+		this.dados = adaptador.obterFilme(resolucao);
+
+		return true;
+	}
+
+	public boolean limpar() {
+		return adaptador.limparBase(resolucao);
 	}
 }

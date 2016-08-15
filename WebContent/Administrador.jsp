@@ -11,11 +11,11 @@
 		<div class="col-xs-12" style="padding: 10px;">
 			<h1>Acesso de Administrador</h1>
 		</div>
-		<form class="col-xs-12 container">
+		<form class="col-xs-12 container" action="${pageContext.request.contextPath}/Administrador" method="post">
 			<div class="form-group row">
 				<label for="selectFonteDados" class="col-xs-2 col-form-label">Fonte de Dados</label>
 				<div class="col-xs-8">
-					<select class="form-control" id="selectFonteDados">
+					<select class="form-control" id="selectFonteDados" name="selectFonteDados">
 					  <option value="C">Apache Cassandra</option>
 					  <option value="H">Apache HBase</option>
 					  <option value="M">MongoDB</option>
@@ -28,7 +28,7 @@
 			<div class="form-group row">
 				<label for="selectResolucao" class="col-xs-2 col-form-label">Resolução</label>
 				<div class="col-xs-8">
-					<select class="form-control" id="selectResolucao">
+					<select class="form-control" id="selectResolucao" name="selectResolucao">
 					  <option value="240p">240p</option>
 					  <option value="360p">360p</option>
 					  <option value="420p">420p</option>
@@ -42,28 +42,28 @@
 			<div class="form-group row">
 				<label for="edtConcorrencia" class="col-xs-2 col-form-label">Concorrência</label>
 				<div class="col-xs-8">
-					<input class="form-control" id="edtConcorrencia" type="number"/>
+					<input class="form-control" id="edtConcorrencia" name="edtConcorrencia" value='${edtConcorrencia}' type="number"/>
 				</div>
 			</div>
 			
 			<div class="form-group row">
 				<label for="edtQuantidade" class="col-xs-2 col-form-label">Quantidade</label>
 				<div class="col-xs-8">
-					<input class="form-control" id="edtQuantidade" type="number"/>
+					<input class="form-control" id="edtQuantidade" name="edtQuantidade" value='${edtQuantidade}' type="number"/>
 				</div>
 			</div>
 			
 			<div class="form-group row">
 				<label for="edtConsole" class="col-xs-2 col-form-label">Console</label>
 				<div class="col-xs-8">
-					<textarea class="form-control" id="edtConsole"></textarea>
+					<textarea class="form-control" id="edtConsole" name="edtConsole">${edtConsole}</textarea>
 				</div>
 			</div>
 			
 			<div class="form-group col-xs-12">
-				<button type="submit" title="Inserir" class="btn btn-primary" name="btnInserir">Inserir</button>
-				<button type="submit" title="Consultar" class="btn btn-info" name="btnConsultar">Consultar</button>
-				<button type="submit" title="Limpar" class="btn btn-danger" name="btnLimpar">Limpar Base</button>
+				<button type="submit" title="Inserir" class="btn btn-primary" name="btnSubmit" value="btnInserir">Inserir</button>
+				<button type="submit" title="Consultar" class="btn btn-info" name="btnSubmit" value="btnConsultar">Consultar</button>
+				<button type="submit" title="Limpar" class="btn btn-danger" name="btnSubmit" value="btnLimpar">Limpar Base</button>
 			</div>
 		</form>
 	</body>
