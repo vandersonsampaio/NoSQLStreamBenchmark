@@ -3,12 +3,12 @@ package DAO;
 public class VoldemortDAO implements IDAO {
 	
 	@Override
-	public Byte[] obter(String resolucao){
+	public byte[] obter(String resolucao){
 		return null;
 	}
 	
 	@Override
-	public boolean inserir(String resolucao, Byte[] dados){
+	public boolean inserir(String resolucao, byte[] dados){
 		return true;
 	}
 	

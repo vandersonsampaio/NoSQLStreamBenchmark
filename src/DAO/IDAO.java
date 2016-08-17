@@ -2,9 +2,9 @@ package DAO;
 
 public interface IDAO {
 
-	public Byte[] obter(String resolucao);
+	public byte[] obter(String resolucao);
 	
-	public boolean inserir(String resolucao, Byte[] dados);
+	public boolean inserir(String resolucao, byte[] dados);
 	
 	public void limpar();
 	

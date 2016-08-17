@@ -1,8 +1,15 @@
 package Adapter;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import DAO.*;
 
 public class Adaptador {	
+	private String PATH_VIDEO = "C:\\Users\\Flisol\\Desktop\\NoSQLStreamBenchmark\\WebContent\\video\\video.mp4";
+	
 	private IDAO dao;
 	
 	public Adaptador(String fonteDados){
@@ -30,16 +37,41 @@ public class Adaptador {
 		}
 	}
 
-	public Byte[] obterFilme(String resolucao) {
+	public byte[] obterFilme(String resolucao) {
 		return dao.obter(resolucao);
 	}
 
-	public boolean inserirFilme(String resolucao, Byte[] dados) {
-		return dao.inserir(resolucao, dados);
+	public boolean inserirFilme(String resolucao, byte[] dados) {
+		if(dados == null || dados.length == 0)
+			return dao.inserir(resolucao, getVideo());
+		else
+			return dao.inserir(resolucao, dados);
 	}
 
 	public boolean limparBase(String resolucao) {
 		dao.limpar();
 		return true;
+	}
+	
+	private byte[] getVideo() {
+		FileInputStream fileInputStream=null;
+
+        File file = new File(PATH_VIDEO);
+
+        byte[] bFile = new byte[(int) file.length()];
+
+	    try {
+			fileInputStream = new FileInputStream(file);
+			fileInputStream.read(bFile);
+		    fileInputStream.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+	    return bFile;
 	}
 }

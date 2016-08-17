@@ -4,19 +4,22 @@ import redis.clients.jedis.Jedis;
 
 public class RedisDAO implements IDAO {
 	
+	private String HOST_CONNECTION = "178.62.254.52";
+	
 	private Jedis jedis;
 	
 	public RedisDAO(){
-		this.jedis = new Jedis();
+		this.jedis = new Jedis(HOST_CONNECTION, 6379);
+	}
+		
+	@Override
+	public byte[] obter(String resolucao){
+		return jedis.get(resolucao.getBytes());
 	}
 	
 	@Override
-	public Byte[] obter(String resolucao){
-		return null;
-	}
-	
-	@Override
-	public boolean inserir(String resolucao, Byte[] dados){
+	public boolean inserir(String resolucao, byte[] dados){
+		jedis.set(resolucao.getBytes(), dados);
 		return true;
 	}
 	

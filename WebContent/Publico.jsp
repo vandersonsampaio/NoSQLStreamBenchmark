@@ -60,7 +60,7 @@
 			
 			<div class="form-group col-xs-12">
 				<video class="img-fluid" controls>
-	  				<source src="movie.mp4" type="video/mp4"></source>
+	  				<source src="video\video.mp4" type="video/mp4"></source>
 	  			</video>
   			</div>
 			

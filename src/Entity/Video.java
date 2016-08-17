@@ -6,7 +6,7 @@ public class Video {
 
 	// Atributos
 	private String resolucao;
-	private Byte[] dados;
+	private byte[] dados;
 	private String fonteDados;
 	private Adaptador adaptador;
 
@@ -25,7 +25,7 @@ public class Video {
 		this.adaptador = new Adaptador(fonteDados);
 	}
 
-	public Video(String resolucao, String fonteDados, Byte[] dados) {
+	public Video(String resolucao, String fonteDados, byte[] dados) {
 		this.resolucao = resolucao;
 		this.dados = dados;
 		this.fonteDados = fonteDados;
@@ -41,11 +41,11 @@ public class Video {
 		this.resolucao = resolucao;
 	}
 
-	public Byte[] getDados() {
+	public byte[] getDados() {
 		return dados;
 	}
 
-	public void setDados(Byte[] dados) {
+	public void setDados(byte[] dados) {
 		this.dados = dados;
 	}
 
