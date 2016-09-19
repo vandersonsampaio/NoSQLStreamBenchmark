@@ -43,7 +43,7 @@ public class Adaptador {
 
 	public boolean inserirFilme(String resolucao, byte[] dados) {
 		if(dados == null || dados.length == 0)
-			return dao.inserir(resolucao, getVideo());
+			return dao.inserir(resolucao, null);//getVideo());
 		else
 			return dao.inserir(resolucao, dados);
 	}
