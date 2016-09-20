@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+	<property>
+		<name>hbase.rootdir</name>
+		<value>file:////tmp/hbase-${user.name}/hbase</value>
+	</property>
+	<property>
+		<name>hbase.zookeeper.property.dataDir</name>
+		<value>/tmp/hbase-${user.name}/zookeeper</value>
+	</property>
+</configuration>
