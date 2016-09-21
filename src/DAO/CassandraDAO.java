@@ -17,11 +17,21 @@ public class CassandraDAO implements IDAO {
 	
 	@Override
 	public byte[] obter(String resolucao){
+		
+		ResultSet results = session.execute("SELECT valor FROM movies WHERE resolucao = '" + resolucao + "'");
+		
+		for (Row row : results) {
+			return row.getBytes(resolucao).array();
+		}
+		
 		return null;
 	}
 	
 	@Override
 	public boolean inserir(String resolucao, byte[] dados){
+		
+		//session.execute("INSERT INTO movies (resolucao, valor) VALUES (" + resolucao + ", " + dados.toString());
+		
 		session.execute("INSERT INTO users (lastname, age, city, email, firstname) VALUES ('Jones', 35, 'Austin', 'bob@example.com', 'Bob')");
 
 		ResultSet results = session.execute("SELECT * FROM users WHERE lastname='Jones'");
