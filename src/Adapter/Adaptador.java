@@ -8,7 +8,7 @@ import java.io.IOException;
 import DAO.*;
 
 public class Adaptador {	
-	private String PATH_VIDEO = "C:\\Users\\Flisol\\Desktop\\NoSQLStreamBenchmark\\WebContent\\video\\video.mp4";
+	private String PATH_VIDEO = "D:\\Vanderson\\Desktop\\blog\\1.PNG";
 	
 	private IDAO dao;
 	
@@ -43,7 +43,7 @@ public class Adaptador {
 
 	public boolean inserirFilme(String resolucao, byte[] dados) {
 		if(dados == null || dados.length == 0)
-			return dao.inserir(resolucao, null);//getVideo());
+			return dao.inserir(resolucao, getVideo());
 		else
 			return dao.inserir(resolucao, dados);
 	}

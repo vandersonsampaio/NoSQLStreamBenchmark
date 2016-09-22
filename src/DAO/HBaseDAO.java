@@ -22,9 +22,13 @@ public class HBaseDAO implements IDAO {
 	
 	public HBaseDAO(){
 		Configuration conf = HBaseConfiguration.create();
+		
+		conf.set("hbase.master", "178.62.254.52"); // master info
+        conf.set("hbase.master.port", "60000");
 		conf.set("hbase.zookeeper.quorum", "178.62.254.52");
 		//this.conf.set("hbase.master", "178.62.254.52:60010");
         conf.set("hbase.zookeeper.property.clientport", "2181");
+        conf.set("zookeeper.znode.parent", "/hbase-unsecure");
         
         try {
 			HBaseAdmin.checkHBaseAvailable(conf);
@@ -79,3 +83,4 @@ public class HBaseDAO implements IDAO {
         }*/
     }
 }
+

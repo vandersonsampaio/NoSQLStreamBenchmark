@@ -9,7 +9,7 @@ public class RedisDAO implements IDAO {
 	private Jedis jedis;
 	
 	public RedisDAO(){
-		this.jedis = new Jedis(HOST_CONNECTION, 6379);
+		this.jedis = new Jedis(HOST_CONNECTION, 6379, 6000);
 	}
 		
 	@Override
@@ -20,6 +20,7 @@ public class RedisDAO implements IDAO {
 	@Override
 	public boolean inserir(String resolucao, byte[] dados){
 		jedis.set(resolucao.getBytes(), dados);
+		jedis.close();
 		return true;
 	}
 	
