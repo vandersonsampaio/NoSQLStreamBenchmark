@@ -20,8 +20,12 @@ public class RedisDAO implements IDAO {
 	@Override
 	public boolean inserir(String resolucao, byte[] dados){
 		jedis.set(resolucao.getBytes(), dados);
-		jedis.close();
 		return true;
+	}
+	
+	@Override
+	public void close(){
+		jedis.close();
 	}
 	
 	@Override

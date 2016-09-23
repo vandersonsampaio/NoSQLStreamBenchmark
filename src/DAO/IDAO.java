@@ -8,4 +8,6 @@ public interface IDAO {
 	
 	public void limpar();
 	
+	public void close();
+	
 }

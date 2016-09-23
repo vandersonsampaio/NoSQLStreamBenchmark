@@ -1,50 +1,21 @@
 package DAO;
 
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.KeyValue;
-import org.apache.hadoop.hbase.MasterNotRunningException;
-import org.apache.hadoop.hbase.ZooKeeperConnectionException;
-import org.apache.hadoop.hbase.client.HBaseAdmin;
-import org.apache.hadoop.hbase.client.HTable;
-import org.apache.hadoop.hbase.client.Result;
-import org.apache.hadoop.hbase.client.ResultScanner;
-import org.apache.hadoop.hbase.client.Scan;
-
-import com.google.protobuf.ServiceException;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
 public class HBaseDAO implements IDAO {
 	
+	private static final Charset UTF8_CHARSET = Charset.forName("UTF-8");
 	private String HOST_CONNECTION = "178.62.254.52";
-	//private static Configuration conf = null;
+	private Client cliente;
 	
 	public HBaseDAO(){
-		Configuration conf = HBaseConfiguration.create();
-		
-		conf.set("hbase.master", "178.62.254.52"); // master info
-        conf.set("hbase.master.port", "60000");
-		conf.set("hbase.zookeeper.quorum", "178.62.254.52");
-		//this.conf.set("hbase.master", "178.62.254.52:60010");
-        conf.set("hbase.zookeeper.property.clientport", "2181");
-        conf.set("zookeeper.znode.parent", "/hbase-unsecure");
-        
-        try {
-			HBaseAdmin.checkHBaseAvailable(conf);
-		} catch (MasterNotRunningException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ZooKeeperConnectionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.cliente = Client.create(); 
 	}
 	
 	@Override
@@ -54,8 +25,27 @@ public class HBaseDAO implements IDAO {
 	
 	@Override
 	public boolean inserir(String resolucao, byte[] dados){
-		getAllRecord("test");
-		return true;
+		try {
+			WebResource service = cliente.resource("http://" + HOST_CONNECTION + ":8030/" +
+					URLEncoder.encode("test", UTF8_CHARSET.displayName()) + "/" +
+					URLEncoder.encode("movie", UTF8_CHARSET.displayName()) + "/" +
+					URLEncoder.encode("resolucao", UTF8_CHARSET.displayName()) + "/" +
+					URLEncoder.encode("240p", UTF8_CHARSET.displayName()));
+			
+			ClientResponse response = service.put(ClientResponse.class);
+			
+			if(response.getStatus() == 200)
+				System.out.println("Deu certo!");
+			else
+				System.out.println("Deu errado: " + response.getStatus());
+			
+			return true;
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 	
 	@Override
@@ -63,24 +53,10 @@ public class HBaseDAO implements IDAO {
 		
 	}
 	
-	 public void getAllRecord (String tableName) {
-        /*try{
-        	HBaseAdmin admin = new HBaseAdmin(conf);
-             HTable table = new HTable(conf, tableName);
-             Scan s = new Scan();
-             ResultScanner ss = table.getScanner(s);
-             for(Result r:ss){
-                 for(KeyValue kv : r.raw()){
-                    System.out.print(new String(kv.getRow()) + " ");
-                    System.out.print(new String(kv.getFamily()) + ":");
-                    System.out.print(new String(kv.getQualifier()) + " ");
-                    System.out.print(kv.getTimestamp() + " ");
-                    System.out.println(new String(kv.getValue()));
-                 }
-             }
-        } catch (IOException e){
-            e.printStackTrace();
-        }*/
-    }
+	@Override
+	public void close(){
+		
+	}
+	
 }
 

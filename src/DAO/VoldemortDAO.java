@@ -35,6 +35,11 @@ public class VoldemortDAO implements IDAO {
 	}
 	
 	@Override
+	public void close(){
+		this.factory.close();
+	}
+	
+	@Override
 	public void limpar(){
 		
 	}

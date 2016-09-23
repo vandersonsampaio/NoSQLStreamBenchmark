@@ -39,13 +39,16 @@ public class CassandraDAO implements IDAO {
 			System.out.format("%s %d\n", row.getString("firstname"), row.getInt("age"));
 		}
 		
-		cluster.close();
-
 		return true;
 	}
 	
 	@Override
 	public void limpar(){
 		
+	}
+	
+	@Override
+	public void close(){
+		cluster.close();
 	}
 }

@@ -38,18 +38,25 @@ public class Adaptador {
 	}
 
 	public byte[] obterFilme(String resolucao) {
-		return dao.obter(resolucao);
+		byte[] retorno = dao.obter(resolucao);
+		dao.close();
+		return retorno;
 	}
 
 	public boolean inserirFilme(String resolucao, byte[] dados) {
+		boolean retorno;
 		if(dados == null || dados.length == 0)
-			return dao.inserir(resolucao, getVideo());
+			retorno = dao.inserir(resolucao, getVideo());
 		else
-			return dao.inserir(resolucao, dados);
+			retorno = dao.inserir(resolucao, dados);
+		
+		dao.close();
+		return retorno;
 	}
 
 	public boolean limparBase(String resolucao) {
 		dao.limpar();
+		dao.close();
 		return true;
 	}
 	

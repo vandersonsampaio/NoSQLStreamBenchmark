@@ -17,7 +17,7 @@ public class MongoDBDAO implements IDAO {
 	public MongoDBDAO(){
 		this.mongo = new MongoClient(HOST_CONNECTION);
 		this.db = this.mongo.getDB("test");
-		this.table = this.db.getCollection("user");
+		this.table = this.db.getCollection("movie");
 	}
 
 	@Override
@@ -42,9 +42,14 @@ public class MongoDBDAO implements IDAO {
 		BasicDBObject document = new BasicDBObject();
 		document.put("resolucao", resolucao);
 		document.put("valor", dados);
-		table.insert(document);
+		this.table.insert(document);
 		
 		return true;
+	}
+	
+	@Override
+	public void close(){
+		this.mongo.close();
 	}
 	
 	@Override
