@@ -30,7 +30,7 @@ public class MongoDBDAO implements IDAO {
 
 		while (cursor.hasNext()) {
 			DBObject ret = cursor.next();
-			Object retorno = ret.get("valor");
+			return (byte[])ret.get("valor");
 		}
 		
 		return null;
