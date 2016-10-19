@@ -5,10 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import Util.Util;
 import DAO.*;
 
 public class Adaptador {	
-	private String PATH_VIDEO = "D:\\Vanderson\\Desktop\\blog\\1.PNG";
+	//private String PATH_VIDEO = "D:\\Vanderson\\Desktop\\blog\\1.PNG";
 	
 	private IDAO dao;
 	
@@ -46,7 +47,7 @@ public class Adaptador {
 	public boolean inserirFilme(String resolucao, byte[] dados) {
 		boolean retorno;
 		if(dados == null || dados.length == 0)
-			retorno = dao.inserir(resolucao, getVideo());
+			retorno = dao.inserir(resolucao, getVideo(resolucao));
 		else
 			retorno = dao.inserir(resolucao, dados);
 		
@@ -60,10 +61,11 @@ public class Adaptador {
 		return true;
 	}
 	
-	private byte[] getVideo() {
+	private byte[] getVideo(String resolucao) {
+		String pathVideo = new Util().getValueByName("files", resolucao, "path");
 		FileInputStream fileInputStream=null;
 
-        File file = new File(PATH_VIDEO);
+        File file = new File(pathVideo);
 
         byte[] bFile = new byte[(int) file.length()];
 

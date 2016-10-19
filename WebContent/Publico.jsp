@@ -59,9 +59,11 @@
 			</div>
 			
 			<div class="form-group col-xs-12">
-				<video class="img-fluid" controls>
-	  				<source src="video\video.mp4" type="video/mp4"></source>
-	  			</video>
+				<video id=example-video width=600 height=300 class="video-js vjs-default-skin" controls>
+				     <source
+				     	src="video/video.mp4"
+				     	type="video/mp4">
+				</video>
   			</div>
 			
 			<div class="form-group row">
@@ -71,5 +73,12 @@
 				</div>
 			</div>
 		</form>
+		
+		<script src="bootstrap-3.3.7-dist/js/video.js"></script>
+		<script src="bootstrap-3.3.7-dist/js/videojs-contrib-hls.min.js"></script>
+		<script type="text/javascript">
+			var player = videojs('example-video');
+			player.play();
+		</script>
 	</body>
 </html>

@@ -4,7 +4,7 @@
 		<database>
 			<name>redis</name>
 			<host>localhost</host>
-			<port></port>
+			<port>0</port>
 		</database>
 		<database>
 			<name>voldemort</name>
@@ -14,47 +14,47 @@
 		<database>
 			<name>hbase</name>
 			<host>localhost</host>
-			<port></port>
+			<port>0</port>
 		</database>
 		<database>
 			<name>mongodb</name>
 			<host>localhost</host>
-			<port></port>
+			<port>0</port>
 		</database>
 		<database>
 			<name>cassandra</name>
 			<host>localhost</host>
-			<port></port>
+			<port>0</port>
 		</database>
 	</databases>
 	<files>
 		<file>
 			<name>240p</name>
-			<path></path>
+			<path>D:\Vanderson\Desktop\blog\1.PNG</path>
 		</file>
 		<file>
 			<name>360p</name>
-			<path></path>
+			<path>D:\Vanderson\Desktop\blog\1.PNG</path>
 		</file>
 		<file>
 			<name>420p</name>
-			<path></path>
+			<path>D:\Vanderson\Desktop\blog\1.PNG</path>
 		</file>
 		<file>
 			<name>720p</name>
-			<path></path>
+			<path>D:\Vanderson\Desktop\blog\1.PNG</path>
 		</file>
 		<file>
 			<name>1080p</name>
-			<path></path>
+			<path>D:\Vanderson\Desktop\blog\1.PNG</path>
 		</file>
 		<file>
 			<name>4k</name>
-			<path></path>
+			<path>D:\Vanderson\Desktop\blog\1.PNG</path>
 		</file>
 		<file>
 			<name>output</name>
-			<path>\tcc-log</path>
+			<path>C:\Users\Vanderson\Desktop</path>
 		</file>
 	</files>
 </configuration>

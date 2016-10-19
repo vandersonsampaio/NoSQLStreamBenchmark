@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Util.Util;
 import Entity.Video;
 
 @WebServlet("/Administrador")
@@ -229,7 +230,7 @@ public class AdministradorController extends HttpServlet {
 		}
 		
 		private void saveLog(String content, String fonteDados) throws IOException{
-			String fileName = "C:\\Users\\Vanderson\\Desktop\\" + fonteDados + ".txt";
+			String fileName = (new Util().getValueByName("files", "output", "path")) + File.separator + fonteDados + ".txt";
 			File file = new File(fileName);
 
 			if (!file.exists()) {
