@@ -62,7 +62,7 @@ public class Video {
 		return adaptador;
 	}
 
-	public boolean inserir() {
+	public long inserir() {
 		return adaptador.inserirFilme(this.resolucao, this.dados);
 	}
 

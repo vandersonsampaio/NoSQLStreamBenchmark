@@ -40,4 +40,14 @@ public class VoldemortDAO implements IDAO {
 	public void limpar() {
 
 	}
+	
+	@Override
+	public boolean adicionar(String resolucao, byte[] dados){
+		return true;
+	}
+	
+	@Override
+	public boolean remover(String resolucao){
+		return true;
+	}
 }

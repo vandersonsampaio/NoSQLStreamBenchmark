@@ -21,7 +21,7 @@ public class Util {
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document document = builder.parse(new File(
-					"WebContent/config/config.xml"));
+					"webapps/NoSQLStreamBenchmark/config/config.xml"));
 
 			NodeList nodes = document.getElementsByTagName(nodeName);
 

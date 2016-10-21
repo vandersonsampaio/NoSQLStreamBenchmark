@@ -8,9 +8,7 @@ import java.io.IOException;
 import Util.Util;
 import DAO.*;
 
-public class Adaptador {	
-	//private String PATH_VIDEO = "D:\\Vanderson\\Desktop\\blog\\1.PNG";
-	
+public class Adaptador {		
 	private IDAO dao;
 	
 	public Adaptador(String fonteDados){
@@ -44,15 +42,20 @@ public class Adaptador {
 		return retorno;
 	}
 
-	public boolean inserirFilme(String resolucao, byte[] dados) {
-		boolean retorno;
+	public long inserirFilme(String resolucao, byte[] dados) {
+		dao.remover(resolucao);
+		
+		long tempoIni = System.currentTimeMillis();
+		
 		if(dados == null || dados.length == 0)
-			retorno = dao.inserir(resolucao, getVideo(resolucao));
+			inserirVideoPadrao(resolucao);
 		else
-			retorno = dao.inserir(resolucao, dados);
+			dao.inserir(resolucao, dados);
 		
 		dao.close();
-		return retorno;
+		
+		long tempoFim = System.currentTimeMillis();
+		return tempoFim - tempoIni;
 	}
 
 	public boolean limparBase(String resolucao) {
@@ -61,17 +64,27 @@ public class Adaptador {
 		return true;
 	}
 	
-	private byte[] getVideo(String resolucao) {
+	private void inserirVideoPadrao(String resolucao) {
 		String pathVideo = new Util().getValueByName("files", resolucao, "path");
-		FileInputStream fileInputStream=null;
+		
+		FileInputStream fileInputStream = null;
 
         File file = new File(pathVideo);
 
-        byte[] bFile = new byte[(int) file.length()];
+        byte[] bFile;
+        
+        if(Runtime.getRuntime().freeMemory() > file.length())
+        	bFile = new byte[(int) file.length()];
+        else
+        	bFile = new byte[(int) ((int) Runtime.getRuntime().freeMemory() * 0.67)];
 
 	    try {
 			fileInputStream = new FileInputStream(file);
-			fileInputStream.read(bFile);
+			
+		    while(fileInputStream.read(bFile) != -1){
+		        dao.adicionar(resolucao, bFile);
+		    }
+		    
 		    fileInputStream.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -80,7 +93,5 @@ public class Adaptador {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
-	    return bFile;
 	}
 }

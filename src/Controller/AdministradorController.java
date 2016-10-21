@@ -196,16 +196,13 @@ public class AdministradorController extends HttpServlet {
 
 			for (int i = 0; i < quantidade; i++) {
 				
-				long tempoIni = System.currentTimeMillis();
+				long tempoProcessamento = 0;
 				
 				video = new Video(resolucao, fonteDados);
 				if(operacao.equals("Inserção"))
-					video.inserir();
+					tempoProcessamento = video.inserir();
 				else
 					video.buscar();
-				
-				long tempoFim = System.currentTimeMillis();
-				long tempoProcessamento = tempoFim - tempoIni;
 				
 				StringBuilder str = new StringBuilder();
 				str.append("Thread;" + this.id + ";");
@@ -213,7 +210,6 @@ public class AdministradorController extends HttpServlet {
 				str.append("Tempo;" + tempoProcessamento + ";");
 				
 				try {
-					System.out.println(str.toString());
 					saveLog(str.toString(), fonteDados);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block

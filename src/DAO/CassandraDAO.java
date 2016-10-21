@@ -51,4 +51,14 @@ public class CassandraDAO implements IDAO {
 	public void close(){
 		cluster.close();
 	}
+	
+	@Override
+	public boolean adicionar(String resolucao, byte[] dados){
+		return true;
+	}
+	
+	@Override
+	public boolean remover(String resolucao){
+		return true;
+	}
 }
