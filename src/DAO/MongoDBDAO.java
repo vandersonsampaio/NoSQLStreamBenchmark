@@ -9,7 +9,7 @@ import com.mongodb.MongoClient;
 
 public class MongoDBDAO implements IDAO {
 	
-	private String HOST_CONNECTION = "178.62.254.52";
+	private String HOST_CONNECTION = "localhost";
 	private MongoClient mongo;
 	private DB db;
 	private DBCollection table;
@@ -59,11 +59,13 @@ public class MongoDBDAO implements IDAO {
 	
 	@Override
 	public boolean adicionar(String resolucao, byte[] dados){
+		inserir(resolucao, dados);
 		return true;
 	}
 	
 	@Override
 	public boolean remover(String resolucao){
+		this.table.drop();
 		return true;
 	}
 }

@@ -12,7 +12,7 @@ public class VoldemortDAO implements IDAO {
 
 	private String HOST_CONNECTION = "tcp://localhost:6666";
 	private StoreClientFactory factory;
-	StoreClient<String, byte[]> client;
+	StoreClient<String, Object> client;
 
 	public VoldemortDAO() {
 		this.factory = new SocketStoreClientFactory(
@@ -22,12 +22,16 @@ public class VoldemortDAO implements IDAO {
 
 	@Override
 	public byte[] obter(String resolucao) {
-		return client.getValue(resolucao);
+		return (byte[])client.getValue(resolucao);
 	}
 
 	@Override
 	public boolean inserir(String resolucao, byte[] dados) {
+		System.out.println("Resolucao: " + resolucao);
+		System.out.println("dados: " + dados);
+		
 		client.put(resolucao, dados);
+		
 		return true;
 	}
 
@@ -43,11 +47,12 @@ public class VoldemortDAO implements IDAO {
 	
 	@Override
 	public boolean adicionar(String resolucao, byte[] dados){
+		inserir(resolucao, dados);
 		return true;
 	}
 	
 	@Override
 	public boolean remover(String resolucao){
-		return true;
+		return this.client.delete(resolucao);
 	}
 }
