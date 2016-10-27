@@ -4,15 +4,14 @@ import voldemort.client.ClientConfig;
 import voldemort.client.SocketStoreClientFactory;
 import voldemort.client.StoreClient;
 import voldemort.client.StoreClientFactory;
-import voldemort.versioning.Versioned;
 
-import org.apache.log4j.Logger;
+import com.datastax.driver.core.utils.Bytes;
 
 public class VoldemortDAO implements IDAO {
 
 	private String HOST_CONNECTION = "tcp://localhost:6666";
 	private StoreClientFactory factory;
-	StoreClient<String, Object> client;
+	StoreClient<String, String> client;
 
 	public VoldemortDAO() {
 		this.factory = new SocketStoreClientFactory(
@@ -22,17 +21,18 @@ public class VoldemortDAO implements IDAO {
 
 	@Override
 	public byte[] obter(String resolucao) {
-		return (byte[])client.getValue(resolucao);
+		return null;//client.getValue(resolucao);
 	}
 
 	@Override
-	public boolean inserir(String resolucao, byte[] dados) {
-		System.out.println("Resolucao: " + resolucao);
-		System.out.println("dados: " + dados);
+	public long inserir(String resolucao, byte[] dados) {
+		long timeIni = System.currentTimeMillis();
 		
-		client.put(resolucao, dados);
+		client.put(resolucao, Bytes.toHexString(dados));
 		
-		return true;
+		long timeFim = System.currentTimeMillis();
+		
+		return timeFim - timeIni;
 	}
 
 	@Override
@@ -46,13 +46,14 @@ public class VoldemortDAO implements IDAO {
 	}
 	
 	@Override
-	public boolean adicionar(String resolucao, byte[] dados){
-		inserir(resolucao, dados);
-		return true;
+	public long adicionar(String resolucao, byte[] dados){
+		return inserir(resolucao, dados);
 	}
 	
 	@Override
 	public boolean remover(String resolucao){
-		return this.client.delete(resolucao);
+		this.client.put(resolucao, "tmp");
+		
+		return true;
 	}
 }

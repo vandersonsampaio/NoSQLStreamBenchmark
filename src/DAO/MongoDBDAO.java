@@ -1,5 +1,8 @@
 package DAO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -9,7 +12,9 @@ import com.mongodb.MongoClient;
 
 public class MongoDBDAO implements IDAO {
 	
-	private String HOST_CONNECTION = "localhost";
+	private final int TAMANHO_ARQUIVO = 16000000;
+	private final String HOST_CONNECTION = "localhost";
+	private static List<byte[]> partFile = null;
 	private MongoClient mongo;
 	private DB db;
 	private DBCollection table;
@@ -37,14 +42,46 @@ public class MongoDBDAO implements IDAO {
 	}
 	
 	@Override
-	public boolean inserir(String resolucao, byte[] dados){
+	public long inserir(String resolucao, byte[] dados){
+		long retorno = 0;
 		
-		BasicDBObject document = new BasicDBObject();
-		document.put("resolucao", resolucao);
-		document.put("valor", dados);
-		this.table.insert(document);
+		int repeticoes = dados.length % TAMANHO_ARQUIVO != 0 ? (dados.length / TAMANHO_ARQUIVO) + 1 : dados.length / TAMANHO_ARQUIVO;
+
+		if(MongoDBDAO.partFile == null){
+			MongoDBDAO.partFile = new ArrayList<byte[]>();
+			for(int i = 1; i <= repeticoes; i++){
+				MongoDBDAO.partFile.add(splitFile(dados, i));
+			}
+		}
+			
+		for(int i = 1; i <= repeticoes; i++){
+			BasicDBObject document = new BasicDBObject();
+			document.put("resolucao", resolucao + i);
+			document.put("valor", MongoDBDAO.partFile.get(i - 1));
+			
+			long timeIni = System.currentTimeMillis();			
+			this.table.insert(document);
+			long timeFim = System.currentTimeMillis();
+			
+			retorno += (timeFim - timeIni);
+		}
 		
-		return true;
+		return retorno;
+	}
+	
+	private byte[] splitFile(byte[] dados, int parte){
+		int inicio = TAMANHO_ARQUIVO * (parte - 1);
+		int fim = TAMANHO_ARQUIVO * parte;
+		
+		fim = fim > dados.length ? dados.length : fim;
+		
+		byte[] retorno = new byte[fim - inicio];
+
+		int k = 0;
+		for(int i = inicio; i < fim; i++)
+			retorno[k++] = dados[i];
+		
+		return retorno;
 	}
 	
 	@Override
@@ -58,9 +95,8 @@ public class MongoDBDAO implements IDAO {
 	}
 	
 	@Override
-	public boolean adicionar(String resolucao, byte[] dados){
-		inserir(resolucao, dados);
-		return true;
+	public long adicionar(String resolucao, byte[] dados){
+		return inserir(resolucao, dados);
 	}
 	
 	@Override

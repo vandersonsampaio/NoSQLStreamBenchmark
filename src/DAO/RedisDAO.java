@@ -8,6 +8,7 @@ public class RedisDAO implements IDAO {
 	private Jedis jedis;
 	
 	public RedisDAO(){
+		System.out.println("Construtor");
 		Util util = new Util();
 		String HOST_CONNECTION = util.getValueByName("databases", "redis", "host");
 		int port = Integer.parseInt(util.getValueByName("databases", "redis", "port"));
@@ -21,19 +22,25 @@ public class RedisDAO implements IDAO {
 	}
 	
 	@Override
-	public boolean inserir(String resolucao, byte[] dados){
+	public long inserir(String resolucao, byte[] dados){
+		long timeIni = System.currentTimeMillis();
+		
 		jedis.set(resolucao.getBytes(), dados);
-		return true;
+		
+		long timeFim = System.currentTimeMillis();
+		System.out.println("Tempo: " + (timeFim - timeIni));
+		return (timeFim - timeIni);
 	}
 	
 	@Override
-	public boolean adicionar(String resolucao, byte[] dados){
-		jedis.append(resolucao.getBytes(), dados);
-		return true;
+	public long adicionar(String resolucao, byte[] dados){
+		System.out.println("Adicionar");
+		return inserir(resolucao, dados);
 	}
 	
 	@Override
 	public boolean remover(String resolucao){
+		System.out.println("Remove");
 		if(jedis.exists(resolucao.getBytes()))
 			jedis.del(resolucao.getBytes());
 		
@@ -42,6 +49,7 @@ public class RedisDAO implements IDAO {
 	
 	@Override
 	public void close(){
+		System.out.println("Close");
 		jedis.close();
 	}
 	

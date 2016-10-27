@@ -10,6 +10,7 @@ import DAO.*;
 
 public class Adaptador {
 	private IDAO dao;
+	private static byte[] bFile = null;
 
 	public Adaptador(String fonteDados) {
 		switch (fonteDados) {
@@ -46,14 +47,11 @@ public class Adaptador {
 		dao.remover(resolucao);
 
 		long retorno;
-		
+
 		if (dados == null || dados.length == 0)
 			retorno = inserirVideoPadrao(resolucao);
-		else{
-			long tempoIni = System.currentTimeMillis();
-			dao.inserir(resolucao, dados);
-			long tempoFim = System.currentTimeMillis();
-			retorno = tempoFim - tempoIni;
+		else {
+			retorno = dao.inserir(resolucao, dados);
 		}
 
 		dao.close();
@@ -68,46 +66,30 @@ public class Adaptador {
 	}
 
 	private long inserirVideoPadrao(String resolucao) {
-		String pathVideo = new Util()
-				.getValueByName("files", resolucao, "path");
 
-		FileInputStream fileInputStream = null;
+		if (Adaptador.bFile == null) {
+			String pathVideo = new Util().getValueByName("files", resolucao,
+					"path");
 
-		File file = new File(pathVideo);
+			FileInputStream fileInputStream = null;
 
-		byte[] bFile;
+			File file = new File(pathVideo);
 
-		while (true) {
-			if (Runtime.getRuntime().freeMemory() > file.length()) {
-				bFile = new byte[(int) file.length()];
-				break;
-			} else if (Runtime.getRuntime().freeMemory() != 0) {
-				bFile = new byte[(int) ((int) Runtime.getRuntime().freeMemory() * 0.67)];
-				break;
-			}else{
-				System.out.println("Sem memória livre!");
+			Adaptador.bFile = new byte[(int) file.length()];
+
+			try {
+				fileInputStream = new FileInputStream(file);
+				fileInputStream.read(Adaptador.bFile);
+				fileInputStream.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 
-		long tempoIni = System.currentTimeMillis();
-		
-		try {
-			fileInputStream = new FileInputStream(file);
-
-			while (fileInputStream.read(bFile) != -1) {
-				dao.adicionar(resolucao, bFile);
-			}
-
-			fileInputStream.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		long tempoFim = System.currentTimeMillis();
-		return tempoFim - tempoIni;
+		return dao.adicionar(resolucao, bFile);
 	}
 }
