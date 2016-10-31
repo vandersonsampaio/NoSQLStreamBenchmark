@@ -53,7 +53,7 @@ public class HBaseDAO implements IDAO {
 		}
 
 		try {
-			HTable table = new HTable(config, "test");
+			HTable table = new HTable(config, "testk");
 			for (int i = 1; i <= repeticoes; i++) {
 				Put put = new Put(Bytes.toBytes(resolucao + i));
 				put.add(Bytes.toBytes("movie"), Bytes.toBytes(resolucao + i),
@@ -106,8 +106,8 @@ public class HBaseDAO implements IDAO {
 
 	@Override
 	public boolean remover(String resolucao) {
-		deleteTable("test");
-		creatTable("test", "movie");
+		deleteTable("test4k");
+		creatTable("test4k", "movie");
 		return true;
 	}
 

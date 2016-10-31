@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,9 +34,11 @@ public class PublicoController extends HttpServlet {
 		String acao = request.getParameter("btnSubmit");
 		String msg = "";
 
+		Video video = new Video();
 		if (acao.equals("btnConsultar")) {
-			msg = obterFilme(Integer.parseInt(quantidade),
+			video = obterFilme(Integer.parseInt(quantidade),
 					Integer.parseInt(concorrencia), fonteDados, resolucao);
+			msg = "Video retornado";
 		} else if (acao.equals("btnMedir")) {
 			msg = efetuarMedicoes(Integer.parseInt(quantidade),
 					Integer.parseInt(concorrencia), fonteDados, resolucao);
@@ -48,15 +51,16 @@ public class PublicoController extends HttpServlet {
 		request.setAttribute("edtConcorrencia", concorrencia);
 		request.setAttribute("edtQuantidade", quantidade);
 		request.setAttribute("edtConsole", msg);
+		request.setAttribute("videoBytes", new String(video.getDados()));
 
 		request.getRequestDispatcher("/Publico.jsp").forward(request, response);
 	}
 
-	public String obterFilme(int quantidade, int concorrencia,
+	public Video obterFilme(int quantidade, int concorrencia,
 			String fonteDados, String resolucao) {
 		long tempoIni = System.currentTimeMillis();
 
-		Video video;
+		Video video = new Video();
 
 		for (int i = 0; i < quantidade; i++) {
 			video = new Video(resolucao, fonteDados);
@@ -73,7 +77,7 @@ public class PublicoController extends HttpServlet {
 				+ "\n Tempo gasto para processamento total = "
 				+ tempoProcessamento + " milisegundos";
 
-		return retorno;
+		return video;
 	}
 
 	public String efetuarMedicoes(int quantidade, int concorrencia,

@@ -61,8 +61,7 @@
 			<div class="form-group col-xs-12">
 				<video id=example-video width=600 height=300 class="video-js vjs-default-skin" controls>
 				     <source
-				     	src="video/video.mp4"
-				     	type="video/mp4">
+				     	type="video/mp4" src="data:video/mp4;base64,${videoBytes}">
 				</video>
   			</div>
 			
@@ -77,8 +76,8 @@
 		<script src="bootstrap-3.3.7-dist/js/video.js"></script>
 		<script src="bootstrap-3.3.7-dist/js/videojs-contrib-hls.min.js"></script>
 		<script type="text/javascript">
-			var player = videojs('example-video');
-			player.play();
+			//var player = videojs('example-video');
+			//player.play();
 		</script>
 	</body>
 </html>
